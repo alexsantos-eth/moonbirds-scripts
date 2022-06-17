@@ -4,13 +4,16 @@ import { useEffect } from "react";
 const useSuccessPayment = () => {
   // PATH
   const path = window.location.pathname;
-  const query = window.location.search;
+  const query = window.location.hash.substring(
+    window.location.hash.indexOf("?sessionID") + 1
+  );
   const sessionID = new URLSearchParams(query).get("sessionID");
+  console.log(sessionID);
 
   // FETCH TO SEND
   useEffect(() => {
-    if (path.startsWith("/payment/success"))
-      fetch(`${import.meta.env.API_ENDPOINT}/print/sendToPrint`, {
+    if (path.startsWith("/connect-wallet"))
+      fetch(`${import.meta.env.VITE_API_ENDPOINT}/print/sendToPrint`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

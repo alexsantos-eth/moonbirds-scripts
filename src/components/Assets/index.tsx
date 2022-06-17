@@ -6,13 +6,16 @@ const Assets: React.FC = () => {
   const { address } = useWeb3Modal();
 
   // ASSETS
-  const [assets, setAssets] = useState<any[] | null>([]);
+  const [assets, setAssets] = useState<any[] | null>(null);
 
   // NFT
   const [selectedNft, setSelectedNft] = useState<string>("");
 
   // SELECT
   const selectNft = (nftAddress: string) => () => setSelectedNft(nftAddress);
+
+  const path = window.location.pathname;
+  const host = window.location.origin;
 
   // GET ASSESTS
   const fetchAssets = () => {
@@ -35,8 +38,8 @@ const Assets: React.FC = () => {
         body: JSON.stringify({
           address,
           nftAddress: selectedNft,
-          successURL: "http://localhost:3000/payment/success",
-          cancelURL: "http://localhost:3000/payment/canceled",
+          successURL: `${host}/connect-wallet/#success`,
+          cancelURL: `${host}/connect-wallet/#canceled`,
         }),
       })
         .then((data) => data.json())
@@ -46,7 +49,6 @@ const Assets: React.FC = () => {
     }
   };
 
-  const path = window.location.pathname;
   useEffect(() => {
     if (path.startsWith("/connect-wallet")) {
       if (address.length) {
@@ -57,6 +59,7 @@ const Assets: React.FC = () => {
 
   return (
     <div>
+      <h4>Select an NFT to print, then click on Pay and Print.</h4>
       <div
         style={{
           gap: "20px",
@@ -72,6 +75,7 @@ const Assets: React.FC = () => {
               style={{
                 appearance: "none",
                 height: "250px",
+                width: "100%",
                 padding: "10px",
                 borderRadius: "10px",
                 transition: "background 0.2s ease-in",
@@ -89,7 +93,13 @@ const Assets: React.FC = () => {
             </button>
           ))
         ) : (
-          <span>Loading ...</span>
+          <h5>Loading collection...</h5>
+        )}
+
+        {assets?.length === 0 && (
+          <h5>
+            You currently do not have any NFTs from our collection to print.
+          </h5>
         )}
       </div>
       <button style={{ width: 300 }} onClick={printAsset}>
