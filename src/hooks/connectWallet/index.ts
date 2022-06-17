@@ -11,11 +11,12 @@ const useConnectWalletBtn = () => {
   // CONTEXT
   const { address, connectWallet, disconnectWallet } = useWeb3Modal();
   const path = window.location.pathname;
+  const host = window.location.hostname;
 
   useEffect(() => {
     // FIND BUTTON
     const button = document.querySelector(
-      "a.action_button[href='https://abscissalabs.xyz/connect-wallet/']"
+      "a.action_button[href*='/connect-wallet/']"
     );
 
     const event = (e: MouseEvent) => {
@@ -31,10 +32,12 @@ const useConnectWalletBtn = () => {
     if (path.startsWith("/connect-wallet")) {
       // SET BUTTON EVENTS AND TEXT
       if (button) {
-        (button as HTMLAnchorElement).href =
-          "https://abscissalabs.xyz/connect-wallet/#open";
+        (button as HTMLAnchorElement).href = `${host}/connect-wallet/#open`;
 
-        (button as HTMLAnchorElement).addEventListener("click", event);
+        (button as HTMLAnchorElement).parentElement!.addEventListener(
+          "click",
+          event
+        );
         button!.textContent = address.length
           ? `${address.substring(0, 5)} ... ${address.substring(5, 10)}`
           : "CONNECT WALLET";
@@ -44,7 +47,10 @@ const useConnectWalletBtn = () => {
     // REMOVE LISTENERS
     return () => {
       if (button)
-        (button as HTMLAnchorElement).removeEventListener("click", event);
+        (button as HTMLAnchorElement).parentElement!.removeEventListener(
+          "click",
+          event
+        );
     };
   }, [connectWallet, disconnectWallet, address, path]);
 };
