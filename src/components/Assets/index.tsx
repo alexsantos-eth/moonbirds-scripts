@@ -11,7 +11,7 @@ const Assets: React.FC = () => {
   // PRINT
   const printAsset = () => {
     if (address.length && selectedNft.length) {
-      fetch(`http://localhost:3000/v1/print/validateAndPay`, {
+      fetch(`${import.meta.env.API_ENDPOINT}/print/validateAndPay`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -47,7 +47,7 @@ const Assets: React.FC = () => {
           return;
         } else {
           loadingText.textContent = "Loading ...";
-          fetch(`http://localhost:3000/v1/assets?address=${address}`)
+          fetch(`${import.meta.env.API_ENDPOINT}/assets?address=${address}`)
             .then((res) => res.json())
             .then((data) => {
               const grid = document.createElement("div");

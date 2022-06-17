@@ -3,6 +3,7 @@
 interface ImportMetaEnv {
   readonly VITE_API_KEY_DEV: string;
   readonly VITE_API_KEY_PROD: string;
+  readonly API_ENDPOINT: string;
   readonly VITE_DEV: string;
 }
 

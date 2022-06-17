@@ -10,7 +10,7 @@ const useSuccessPayment = () => {
   // FETCH TO SEND
   useEffect(() => {
     if (path.startsWith("/payment/success"))
-      fetch(`http://localhost:3000/v1/print/sendToPrint`, {
+      fetch(`${import.meta.env.API_ENDPOINT}/print/sendToPrint`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
