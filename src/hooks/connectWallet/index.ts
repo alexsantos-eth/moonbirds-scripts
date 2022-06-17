@@ -18,12 +18,14 @@ const useConnectWalletBtn = () => {
       "a.action_button[href='https://abscissalabs.xyz/connect-wallet/']"
     );
 
-    const event = () => {
+    const event = (e: MouseEvent) => {
+      e.preventDefault();
       if (!address.length) {
         if (connectWallet) connectWallet();
       } else {
         if (disconnectWallet) disconnectWallet();
       }
+      return false;
     };
 
     if (path.startsWith("/connect-wallet")) {
@@ -31,6 +33,7 @@ const useConnectWalletBtn = () => {
       if (button) {
         (button as HTMLAnchorElement).href =
           "https://abscissalabs.xyz/connect-wallet/#open";
+
         (button as HTMLAnchorElement).addEventListener("click", event);
         button!.textContent = address.length
           ? `${address.substring(0, 5)} ... ${address.substring(5, 10)}`
@@ -43,7 +46,7 @@ const useConnectWalletBtn = () => {
       if (button)
         (button as HTMLAnchorElement).removeEventListener("click", event);
     };
-  }, [connectWallet, disconnectWallet, address]);
+  }, [connectWallet, disconnectWallet, address, path]);
 };
 
 export default useConnectWalletBtn;
