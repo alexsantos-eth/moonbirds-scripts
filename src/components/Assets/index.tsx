@@ -8,13 +8,10 @@ const Assets: React.FC = () => {
   // NFT
   const [selectedNft, setSelectedNft] = useState<string>("");
 
-  // SELECT
-  const selectNft = (nftAddress: string) => () => setSelectedNft(nftAddress);
-
   // PRINT
   const printAsset = () => {
     if (address.length && selectedNft.length) {
-      fetch(`http://localhost:4000/v1/print/validateAndPay`, {
+      fetch(`http://localhost:3000/v1/print/validateAndPay`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -22,8 +19,8 @@ const Assets: React.FC = () => {
         body: JSON.stringify({
           address,
           nftAddress: selectedNft,
-          successURL: "http://localhost:3000/payment/success",
-          cancelURL: "http://localhost:3000/payment/canceled",
+          successURL: "http://localhost:8000/payment/success",
+          cancelURL: "http://localhost:8000/payment/canceled",
         }),
       })
         .then((data) => data.json())
@@ -41,7 +38,7 @@ const Assets: React.FC = () => {
       );
 
       if (container) {
-        const loadingText = document.createElement("p");
+        const loadingText = document.createElement("h4");
         container.innerHTML = "";
         container.appendChild(loadingText);
 
@@ -50,7 +47,7 @@ const Assets: React.FC = () => {
           return;
         } else {
           loadingText.textContent = "Loading ...";
-          fetch(`http://localhost:4000/v1/assets?address=${address}`)
+          fetch(`http://localhost:3000/v1/assets?address=${address}`)
             .then((res) => res.json())
             .then((data) => {
               const grid = document.createElement("div");
@@ -65,6 +62,9 @@ const Assets: React.FC = () => {
                 const button = document.createElement("button");
                 const image = document.createElement("img");
 
+                button.addEventListener("click", () =>
+                  setSelectedNft(nft.id.tokenId)
+                );
                 button.style.cssText = `appearance: "none";height: "400px";padding: "20px";marginLeft: "20px";background: ${
                   selectedNft === nft.id.tokenId ? "#777" : "white"
                 }`;
