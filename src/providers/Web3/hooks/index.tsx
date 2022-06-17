@@ -32,35 +32,56 @@ export const useWalletProvider = (
 ) => {
   useEffect(() => {
     import("@walletconnect/web3-provider").then((wc) => {
-      import("@coinbase/wallet-sdk").then((cc) => {
-        import("web3modal").then((w3m) => {
+      import("web3modal").then((w3m) => {
+        import("walletlink").then((wlink) => {
           const WalletConnectProvider = wc.default;
-          const CoinbaseWalletSDK = cc.default;
           const Web3Modal = w3m.default;
+          const WalletLink = wlink.default;
+          const isDev = import.meta.env.VITE_DEV === "true";
+          const prodKeys = import.meta.env.VITE_API_KEY_PROD;
+          const devKeys = import.meta.env.VITE_API_KEY_DEV;
+          const alchemyKey = isDev ? devKeys : prodKeys;
 
           // PROVIDER
           const providerOptions = {
-            coinbasewallet: {
-              package: CoinbaseWalletSDK,
+            "custom-walletlink": {
+              display: {
+                logo: "https://play-lh.googleusercontent.com/PjoJoG27miSglVBXoXrxBSLveV6e3EeBPpNY55aiUUBM9Q1RCETKCOqdOkX2ZydqVf0",
+                name: "Coinbase",
+                description: "Connect to Coinbase Wallet (not Coinbase App)",
+              },
               options: {
-                appName: "MoonBirds",
-                infuraId: "INFURA_ID",
-                rpc: "",
+                appName: "Moonbirds",
+                networkUrl: `https://eth-rinkeby.alchemyapi.io/v2/${alchemyKey}`,
+                chainId: 1,
+              },
+              package: WalletLink,
+              connector: async (_: any, options: any) => {
+                const { appName, networkUrl, chainId } = options;
+                const walletLink = new WalletLink({ appName });
+                const provider = walletLink.makeWeb3Provider(
+                  networkUrl,
+                  chainId
+                );
+                await provider.enable();
+                return provider;
               },
             },
             walletconnect: {
               package: WalletConnectProvider,
               options: {
-                infuraId: "",
+                rpc: `https://eth-rinkeby.alchemyapi.io/v2/${alchemyKey}`,
               },
             },
           };
 
           // NEW MODAL
           const newWeb3Modal = new Web3Modal({
+            disableInjectedProvider: false,
             cacheProvider: true,
             network: "mainnet",
             providerOptions,
+            theme: "dark",
           });
 
           // UPDATE MODAL
