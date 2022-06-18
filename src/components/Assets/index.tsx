@@ -102,7 +102,29 @@ const Assets: React.FC = () => {
           </h5>
         )}
       </div>
-      <button style={{ width: 300 }} onClick={printAsset}>
+      <button
+        style={{
+          appearance: "none",
+          border: "none",
+          outline: "none",
+          marginTop: "10px",
+          width: 300,
+          background: "#fff",
+          display: "flex",
+          alignItems: "center",
+          whiteSpace: "nowrap",
+          justifyContent: "center",
+          flexShrink: 0,
+          fontSize: "15px",
+          fontWeight: 700,
+          letterSpacing: "1px",
+          overflow: "hidden",
+          padding: "10px 20px",
+          textDecoration: "none!important",
+          lineHeight: "21px",
+        }}
+        onClick={printAsset}
+      >
         Proceed to Checkout
       </button>
     </div>
