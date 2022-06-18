@@ -65,7 +65,7 @@ const Assets: React.FC = () => {
           gap: "20px",
           width: "100%",
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr) )",
+          gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
         }}
       >
         {assets ? (
@@ -77,6 +77,8 @@ const Assets: React.FC = () => {
                 height: "250px",
                 padding: "10px",
                 borderRadius: "10px",
+                border: "none",
+                outline: "none",
                 transition: "background 0.2s ease-in",
                 background: selectedNft === nft.id.tokenId ? "white" : "#333",
               }}
@@ -87,8 +89,8 @@ const Assets: React.FC = () => {
                 height="230px"
                 style={{
                   objectFit: "contain",
-                  height: "230px !important",
-                  minHeight: "230px !important",
+                  height: "230px",
+                  minHeight: "230px",
                 }}
                 src={nft.media?.[0]?.gateway ?? ""}
                 alt={nft.id.tokenId}
