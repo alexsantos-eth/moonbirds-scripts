@@ -79,7 +79,7 @@ const Assets: React.FC = () => {
                 padding: "10px",
                 borderRadius: "10px",
                 transition: "background 0.2s ease-in",
-                background: selectedNft === nft.id.tokenId ? "white" : "#000",
+                background: selectedNft === nft.id.tokenId ? "white" : "#333",
               }}
               onClick={selectNft(nft.id.tokenId)}
             >
@@ -108,7 +108,7 @@ const Assets: React.FC = () => {
           border: "none",
           outline: "none",
           marginTop: "10px",
-          width: 300,
+          color: "#2d2d2d",
           background: "#fff",
           display: "flex",
           alignItems: "center",
