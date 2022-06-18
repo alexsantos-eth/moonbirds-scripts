@@ -75,7 +75,6 @@ const Assets: React.FC = () => {
               style={{
                 appearance: "none",
                 height: "250px",
-                width: "100%",
                 padding: "10px",
                 borderRadius: "10px",
                 transition: "background 0.2s ease-in",
@@ -85,8 +84,12 @@ const Assets: React.FC = () => {
             >
               <img
                 width="100%"
-                height="100%"
-                style={{ objectFit: "cover" }}
+                height="230px"
+                style={{
+                  objectFit: "contain",
+                  height: "230px !important",
+                  minHeight: "230px !important",
+                }}
                 src={nft.media?.[0]?.gateway ?? ""}
                 alt={nft.id.tokenId}
               />
