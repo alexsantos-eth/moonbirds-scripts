@@ -59,7 +59,7 @@ const Assets: React.FC = () => {
 
   return (
     <div>
-      <h4>Select an NFT to print, then click on Pay and Print.</h4>
+      <h4>Select NFT, then click on the button Proceed to Checkout</h4>
       <div
         style={{
           gap: "20px",
@@ -103,7 +103,7 @@ const Assets: React.FC = () => {
         )}
       </div>
       <button style={{ width: 300 }} onClick={printAsset}>
-        Pay and Print
+        Proceed to Checkout
       </button>
     </div>
   );

@@ -8,11 +8,10 @@ const useSuccessPayment = () => {
     window.location.hash.indexOf("?sessionID") + 1
   );
   const sessionID = new URLSearchParams(query).get("sessionID");
-  console.log(sessionID);
 
   // FETCH TO SEND
   useEffect(() => {
-    if (path.startsWith("/connect-wallet"))
+    if (path.startsWith("/connect-wallet") && sessionID)
       fetch(`${import.meta.env.VITE_API_ENDPOINT}/print/sendToPrint`, {
         method: "POST",
         headers: {
@@ -24,7 +23,7 @@ const useSuccessPayment = () => {
         .then((json) => {
           if (json.ok) console.log(json);
         });
-  }, [path]);
+  }, [path, sessionID]);
 };
 
 export default useSuccessPayment;
