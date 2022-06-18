@@ -15,7 +15,7 @@ const useConnectWalletBtn = () => {
 
   useEffect(() => {
     // FIND BUTTON
-    const button = document.querySelector(
+    const buttons = document.querySelectorAll(
       "a.action_button[href*='/connect-wallet/']"
     );
 
@@ -31,26 +31,35 @@ const useConnectWalletBtn = () => {
 
     if (path.startsWith("/connect-wallet")) {
       // SET BUTTON EVENTS AND TEXT
-      if (button) {
-        (button as HTMLAnchorElement).href = `${host}/connect-wallet/#open`;
+      if (buttons) {
+        buttons.forEach((button) => {
+          if (button) {
+            (button as HTMLAnchorElement).href = `${host}/connect-wallet/#open`;
 
-        (button as HTMLAnchorElement).parentElement!.addEventListener(
-          "click",
-          event
-        );
-        button!.textContent = address.length
-          ? `${address.substring(0, 5)} ... ${address.substring(5, 10)}`
-          : "CONNECT WALLET";
+            (button as HTMLAnchorElement).parentElement!.addEventListener(
+              "click",
+              event
+            );
+            button!.textContent = address.length
+              ? `${address.substring(0, 5)} ... ${address.substring(5, 10)}`
+              : "CONNECT WALLET";
+          }
+        });
       }
     }
 
     // REMOVE LISTENERS
     return () => {
-      if (button)
-        (button as HTMLAnchorElement).parentElement!.removeEventListener(
-          "click",
-          event
-        );
+      if (buttons) {
+        buttons.forEach((button) => {
+          if (button) {
+            (button as HTMLAnchorElement).parentElement!.removeEventListener(
+              "click",
+              event
+            );
+          }
+        });
+      }
     };
   }, [connectWallet, disconnectWallet, address, path]);
 };
